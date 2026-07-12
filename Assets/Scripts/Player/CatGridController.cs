@@ -17,6 +17,7 @@ public class CatGridController : MonoBehaviour
     private Vector3 targetPosition;
     private bool isMoving;
     private bool isJumping;
+    private bool isLocked;
 
     private void Start()
     {
@@ -32,6 +33,7 @@ public class CatGridController : MonoBehaviour
         }
 
         if (isJumping) return;
+        if (isLocked) return;
 
         ReadMovementInput();
         ReadActionInput();
@@ -76,7 +78,30 @@ public class CatGridController : MonoBehaviour
         if (transform.position == targetPosition)
         {
             isMoving = false;
+            CheckForTrap();
         }
+    }
+
+    private void CheckForTrap()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, cardCheckRadius, cardLayerMask);
+
+        foreach (Collider hit in hits)
+        {
+            ComodinTrap trap = hit.GetComponent<ComodinTrap>();
+            if (trap != null)
+            {
+                StartCoroutine(LockMovement(trap.LockDuration));
+                break;
+            }
+        }
+    }
+
+    private IEnumerator LockMovement(float duration)
+    {
+        isLocked = true;
+        yield return new WaitForSeconds(duration);
+        isLocked = false;
     }
 
     private IEnumerator JumpAndSelect()
