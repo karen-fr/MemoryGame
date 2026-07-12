@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class CatGridController : MonoBehaviour
 {
-    [SerializeField] private float cellSize = 1f;
+    [SerializeField] private float moveDistance = 0.5f;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 0.5f;
     [SerializeField] private float jumpDuration = 0.3f;
@@ -30,9 +30,22 @@ public class CatGridController : MonoBehaviour
 
         if (visualRoot == null)
         {
-            Transform found = transform.Find("CharacterVisual");
+            Transform found = FindChildRecursive(transform, "CharacterVisual");
             visualRoot = found != null ? found : transform;
         }
+    }
+
+    private static Transform FindChildRecursive(Transform parent, string childName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == childName) return child;
+
+            Transform result = FindChildRecursive(child, childName);
+            if (result != null) return result;
+        }
+
+        return null;
     }
 
     private void CalculateScreenRelativeAxes()
@@ -106,7 +119,7 @@ public class CatGridController : MonoBehaviour
 
         if (direction != Vector3.zero)
         {
-            targetPosition = transform.position + direction * cellSize;
+            targetPosition = transform.position + direction * moveDistance;
             isMoving = true;
             RotateTowards(direction);
         }
