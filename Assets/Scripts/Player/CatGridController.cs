@@ -9,19 +9,69 @@ public class CatGridController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 0.5f;
     [SerializeField] private float jumpDuration = 0.3f;
-    [SerializeField] private LayerMask cardLayerMask = ~0;
     [SerializeField] private float cardCheckRadius = 0.4f;
+    [SerializeField] private Transform visualRoot;
 
     public event Action<MemoryCard> CardSelected;
+    public event Action<float> TrapTriggered;
 
     private Vector3 targetPosition;
     private bool isMoving;
     private bool isJumping;
     private bool isLocked;
 
+    private Vector3 screenUpDirection = Vector3.forward;
+    private Vector3 screenRightDirection = Vector3.right;
+
     private void Start()
     {
         targetPosition = transform.position;
+        CalculateScreenRelativeAxes();
+
+        if (visualRoot == null)
+        {
+            Transform found = transform.Find("CharacterVisual");
+            visualRoot = found != null ? found : transform;
+        }
+    }
+
+    private void CalculateScreenRelativeAxes()
+    {
+        Camera cam = Camera.main;
+        if (cam == null) return;
+
+        Vector3 camForward = cam.transform.forward;
+        camForward.y = 0f;
+        if (camForward.sqrMagnitude > 0.0001f)
+        {
+            screenUpDirection = SnapToNearestGridAxis(camForward.normalized);
+        }
+
+        Vector3 camRight = cam.transform.right;
+        camRight.y = 0f;
+        if (camRight.sqrMagnitude > 0.0001f)
+        {
+            screenRightDirection = SnapToNearestGridAxis(camRight.normalized);
+        }
+    }
+
+    private static Vector3 SnapToNearestGridAxis(Vector3 direction)
+    {
+        Vector3[] axes = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+        Vector3 nearestAxis = Vector3.forward;
+        float bestDot = float.NegativeInfinity;
+
+        foreach (Vector3 axis in axes)
+        {
+            float dot = Vector3.Dot(direction, axis);
+            if (dot > bestDot)
+            {
+                bestDot = dot;
+                nearestAxis = axis;
+            }
+        }
+
+        return nearestAxis;
     }
 
     private void Update()
@@ -45,20 +95,28 @@ public class CatGridController : MonoBehaviour
 
         Vector3 direction = Vector3.zero;
 
-        if (Keyboard.current.upArrowKey.wasPressedThisFrame || Keyboard.current.wKey.wasPressedThisFrame)
-            direction = Vector3.forward;
-        else if (Keyboard.current.downArrowKey.wasPressedThisFrame || Keyboard.current.sKey.wasPressedThisFrame)
-            direction = Vector3.back;
-        else if (Keyboard.current.leftArrowKey.wasPressedThisFrame || Keyboard.current.aKey.wasPressedThisFrame)
-            direction = Vector3.left;
-        else if (Keyboard.current.rightArrowKey.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame)
-            direction = Vector3.right;
+        if (Keyboard.current.upArrowKey.isPressed || Keyboard.current.wKey.isPressed)
+            direction = screenUpDirection;
+        else if (Keyboard.current.downArrowKey.isPressed || Keyboard.current.sKey.isPressed)
+            direction = -screenUpDirection;
+        else if (Keyboard.current.leftArrowKey.isPressed || Keyboard.current.aKey.isPressed)
+            direction = -screenRightDirection;
+        else if (Keyboard.current.rightArrowKey.isPressed || Keyboard.current.dKey.isPressed)
+            direction = screenRightDirection;
 
         if (direction != Vector3.zero)
         {
             targetPosition = transform.position + direction * cellSize;
             isMoving = true;
+            RotateTowards(direction);
         }
+    }
+
+    private void RotateTowards(Vector3 direction)
+    {
+        if (visualRoot == null || direction == Vector3.zero) return;
+
+        visualRoot.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }
 
     private void ReadActionInput()
@@ -84,17 +142,19 @@ public class CatGridController : MonoBehaviour
 
     private void CheckForTrap()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, cardCheckRadius, cardLayerMask);
+        TryTriggerTrap();
+    }
 
-        foreach (Collider hit in hits)
-        {
-            ComodinTrap trap = hit.GetComponent<ComodinTrap>();
-            if (trap != null)
-            {
-                StartCoroutine(LockMovement(trap.LockDuration));
-                break;
-            }
-        }
+    private bool TryTriggerTrap()
+    {
+        ComodinTrap nearestTrap = FindNearest(FindObjectsByType<ComodinTrap>(FindObjectsSortMode.None), t => t.transform.position);
+
+        if (nearestTrap == null) return false;
+
+        nearestTrap.NotifyDetected();
+        TrapTriggered?.Invoke(nearestTrap.LockDuration);
+        StartCoroutine(LockMovement(nearestTrap.LockDuration));
+        return true;
     }
 
     private IEnumerator LockMovement(float duration)
@@ -131,21 +191,42 @@ public class CatGridController : MonoBehaviour
         transform.position = startPosition;
         isJumping = false;
 
-        TrySelectCard();
+        if (!TryTriggerTrap())
+        {
+            TrySelectCard();
+        }
     }
 
     private void TrySelectCard()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, cardCheckRadius, cardLayerMask);
+        MemoryCard nearestCard = FindNearest(FindObjectsByType<MemoryCard>(FindObjectsSortMode.None), c => c.transform.position);
 
-        foreach (Collider hit in hits)
+        if (nearestCard != null)
         {
-            MemoryCard card = hit.GetComponent<MemoryCard>();
-            if (card != null)
+            Debug.Log("[CatGridController] Ficha seleccionada: " + nearestCard.name);
+            CardSelected?.Invoke(nearestCard);
+        }
+    }
+
+    private T FindNearest<T>(T[] candidates, Func<T, Vector3> getPosition) where T : class
+    {
+        T nearest = null;
+        float nearestDistance = cardCheckRadius;
+
+        foreach (T candidate in candidates)
+        {
+            Vector3 position = getPosition(candidate);
+            float dx = transform.position.x - position.x;
+            float dz = transform.position.z - position.z;
+            float distance = Mathf.Sqrt(dx * dx + dz * dz);
+
+            if (distance <= nearestDistance)
             {
-                CardSelected?.Invoke(card);
-                break;
+                nearestDistance = distance;
+                nearest = candidate;
             }
         }
+
+        return nearest;
     }
 }

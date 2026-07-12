@@ -6,11 +6,8 @@ public class ComodinTrap : MonoBehaviour
 
     public float LockDuration => lockDuration;
 
-    private void Awake()
+    public void NotifyDetected()
     {
-        if (GetComponent<Collider>() == null)
-        {
-            gameObject.AddComponent<BoxCollider>();
-        }
+        Debug.Log("[ComodinTrap] Detectado - bloqueando " + lockDuration + "s");
     }
 }

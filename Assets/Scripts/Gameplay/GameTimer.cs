@@ -3,13 +3,20 @@ using UnityEngine;
 
 public class GameTimer : MonoBehaviour
 {
-    [SerializeField] private float startTime = 60f;
+    [SerializeField] private float startTime = 45f;
     [SerializeField] private UIManager uiManager;
 
     public event Action TimeUp;
 
     private float currentTime;
     private bool isRunning;
+
+    private void Start()
+    {
+        if (uiManager == null) uiManager = FindFirstObjectByType<UIManager>();
+        Debug.Log("[GameTimer] Start - iniciando en " + startTime + "s");
+        StartTimer();
+    }
 
     public void StartTimer()
     {

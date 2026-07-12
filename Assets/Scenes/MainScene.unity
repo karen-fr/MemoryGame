@@ -910,7 +910,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 3
-  flipDuration: 0.3
 --- !u!1 &151847156 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4255396842627421513, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
@@ -1295,7 +1294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 2
-  flipDuration: 0.3
 --- !u!114 &192285142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,7 +1307,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 4
-  flipDuration: 0.3
 --- !u!1001 &194775632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2618,7 +2615,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 2
-  flipDuration: 0.3
 --- !u!1001 &468736411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3022,7 +3018,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 4
-  flipDuration: 0.3
 --- !u!114 &508830029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3194,7 +3189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 1
-  flipDuration: 0.3
 --- !u!1001 &531360967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4236,8 +4230,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278650631
+  m_fontColor: {r: 0.028301895, g: 0.0271004, b: 0.0271004, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4254,8 +4248,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 52
+  m_fontSizeBase: 52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4315,8 +4309,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 400, y: 60}
+  m_AnchoredPosition: {x: 193.8, y: -62.6}
+  m_SizeDelta: {x: 700, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &769096466
 PrefabInstance:
@@ -4533,10 +4527,8 @@ MonoBehaviour:
   moveSpeed: 5
   jumpHeight: 0.5
   jumpDuration: 0.3
-  cardLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  cardCheckRadius: 0.4
+  cardCheckRadius: 0.6
+  visualRoot: {fileID: 0}
 --- !u!1001 &787297908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4723,7 +4715,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 3
-  flipDuration: 0.3
 --- !u!1001 &814364446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4974,8 +4965,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -40}
-  m_SizeDelta: {x: 200, y: 60}
+  m_AnchoredPosition: {x: 120, y: -60}
+  m_SizeDelta: {x: 250, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &901101191
 PrefabInstance:
@@ -5071,8 +5062,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -120, y: -40}
-  m_SizeDelta: {x: 200, y: 60}
+  m_AnchoredPosition: {x: -150, y: -60}
+  m_SizeDelta: {x: 300, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &908020461
 GameObject:
@@ -5270,7 +5261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairId: 1
-  flipDuration: 0.3
 --- !u!1001 &991233750
 PrefabInstance:
   m_ObjectHideFlags: 0

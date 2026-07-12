@@ -19,18 +19,34 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         if (catController != null) catController.CardSelected += HandleCardSelected;
+        if (catController != null) catController.TrapTriggered += HandleTrapTriggered;
         if (gameTimer != null) gameTimer.TimeUp += HandleTimeUp;
     }
 
     private void OnDisable()
     {
         if (catController != null) catController.CardSelected -= HandleCardSelected;
+        if (catController != null) catController.TrapTriggered -= HandleTrapTriggered;
         if (gameTimer != null) gameTimer.TimeUp -= HandleTimeUp;
+    }
+
+    private void Awake()
+    {
+        ResolveReferences();
+        Debug.Log("[GameManager] Awake");
     }
 
     private void Start()
     {
+        Debug.Log("[GameManager] Start");
         StartGame();
+    }
+
+    private void ResolveReferences()
+    {
+        if (catController == null) catController = FindFirstObjectByType<CatGridController>();
+        if (gameTimer == null) gameTimer = FindFirstObjectByType<GameTimer>();
+        if (uiManager == null) uiManager = FindFirstObjectByType<UIManager>();
     }
 
     public void StartGame()
@@ -44,7 +60,7 @@ public class GameManager : MonoBehaviour
         if (uiManager != null)
         {
             uiManager.UpdateMatchesText(matchedPairsCount, totalPairs);
-            uiManager.ShowMessage("Start");
+            uiManager.ShowMessage("Encuentra las parejas");
         }
 
         if (gameTimer != null) gameTimer.StartTimer();
@@ -61,6 +77,7 @@ public class GameManager : MonoBehaviour
         if (firstCard == null)
         {
             firstCard = card;
+            if (uiManager != null) uiManager.ShowMessage("Ficha seleccionada, busca su pareja");
             return;
         }
 
@@ -80,7 +97,11 @@ public class GameManager : MonoBehaviour
             matchedPairsCount++;
 
             if (audioManager != null) audioManager.PlayMatchSound();
-            if (uiManager != null) uiManager.UpdateMatchesText(matchedPairsCount, totalPairs);
+            if (uiManager != null)
+            {
+                uiManager.UpdateMatchesText(matchedPairsCount, totalPairs);
+                uiManager.ShowMessage("Pareja encontrada");
+            }
 
             if (matchedPairsCount >= totalPairs)
             {
@@ -93,7 +114,7 @@ public class GameManager : MonoBehaviour
             secondCard.Hide();
 
             if (audioManager != null) audioManager.PlayMismatchSound();
-            if (uiManager != null) uiManager.ShowMessage("Try Again");
+            if (uiManager != null) uiManager.ShowMessage("Intenta otra vez");
         }
 
         firstCard = null;
@@ -101,12 +122,28 @@ public class GameManager : MonoBehaviour
         isInputLocked = false;
     }
 
+    private void HandleTrapTriggered(float lockDuration)
+    {
+        if (isGameOver) return;
+
+        if (uiManager != null) uiManager.ShowMessage("Trampa, espera...");
+        StartCoroutine(ClearTrapMessage(lockDuration));
+    }
+
+    private IEnumerator ClearTrapMessage(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (isGameOver) yield break;
+        if (uiManager != null) uiManager.ShowMessage("Encuentra las parejas");
+    }
+
     private void WinGame()
     {
         isGameOver = true;
 
         if (gameTimer != null) gameTimer.StopTimer();
-        if (uiManager != null) uiManager.ShowMessage("Win");
+        if (uiManager != null) uiManager.ShowMessage("¡Ganaste!");
         if (audioManager != null) audioManager.PlayWinSound();
     }
 
@@ -117,6 +154,6 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         isInputLocked = true;
 
-        if (uiManager != null) uiManager.ShowMessage("Finish");
+        if (uiManager != null) uiManager.ShowMessage("Se acabó el tiempo");
     }
 }
