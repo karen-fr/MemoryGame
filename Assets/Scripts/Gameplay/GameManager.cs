@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameTimer gameTimer;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private AudioManager audioManager;
-    [SerializeField] private int totalPairs = 8;
+    [SerializeField] private int totalPairs = 4;
     [SerializeField] private float compareDelay = 0.6f;
 
     private MemoryCard firstCard;

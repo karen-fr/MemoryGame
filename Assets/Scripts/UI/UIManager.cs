@@ -1,11 +1,11 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Text timeText;
-    [SerializeField] private Text matchesText;
-    [SerializeField] private Text messageText;
+    [SerializeField] private TMP_Text timeText;
+    [SerializeField] private TMP_Text matchesText;
+    [SerializeField] private TMP_Text messageText;
 
     public void UpdateTimeText(float timeInSeconds)
     {

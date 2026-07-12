@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum CardState
@@ -10,15 +11,23 @@ public enum CardState
 public class MemoryCard : MonoBehaviour
 {
     [SerializeField] private int pairId;
-    [SerializeField] private GameObject hiddenVisual;
-    [SerializeField] private GameObject revealedVisual;
+    [SerializeField] private float flipDuration = 0.3f;
 
     public int PairId => pairId;
     public CardState State { get; private set; } = CardState.Hidden;
 
+    private Quaternion hiddenRotation;
+    private Quaternion revealedRotation;
+
     private void Awake()
     {
-        Hide();
+        if (GetComponent<Collider>() == null)
+        {
+            gameObject.AddComponent<BoxCollider>();
+        }
+
+        hiddenRotation = transform.localRotation;
+        revealedRotation = hiddenRotation * Quaternion.Euler(0f, 180f, 0f);
     }
 
     public void Reveal()
@@ -26,9 +35,8 @@ public class MemoryCard : MonoBehaviour
         if (State == CardState.Matched) return;
 
         State = CardState.Revealed;
-
-        if (hiddenVisual != null) hiddenVisual.SetActive(false);
-        if (revealedVisual != null) revealedVisual.SetActive(true);
+        StopAllCoroutines();
+        StartCoroutine(FlipTo(revealedRotation));
     }
 
     public void Hide()
@@ -36,16 +44,29 @@ public class MemoryCard : MonoBehaviour
         if (State == CardState.Matched) return;
 
         State = CardState.Hidden;
-
-        if (hiddenVisual != null) hiddenVisual.SetActive(true);
-        if (revealedVisual != null) revealedVisual.SetActive(false);
+        StopAllCoroutines();
+        StartCoroutine(FlipTo(hiddenRotation));
     }
 
     public void SetMatched()
     {
         State = CardState.Matched;
+        StopAllCoroutines();
+        StartCoroutine(FlipTo(revealedRotation));
+    }
 
-        if (hiddenVisual != null) hiddenVisual.SetActive(false);
-        if (revealedVisual != null) revealedVisual.SetActive(true);
+    private IEnumerator FlipTo(Quaternion targetRotation)
+    {
+        Quaternion startRotation = transform.localRotation;
+        float elapsed = 0f;
+
+        while (elapsed < flipDuration)
+        {
+            transform.localRotation = Quaternion.Slerp(startRotation, targetRotation, elapsed / flipDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localRotation = targetRotation;
     }
 }

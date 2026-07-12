@@ -9,7 +9,7 @@ public class CatGridController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 0.5f;
     [SerializeField] private float jumpDuration = 0.3f;
-    [SerializeField] private LayerMask cardLayerMask;
+    [SerializeField] private LayerMask cardLayerMask = ~0;
     [SerializeField] private float cardCheckRadius = 0.4f;
 
     public event Action<MemoryCard> CardSelected;
