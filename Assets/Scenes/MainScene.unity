@@ -5908,7 +5908,7 @@ MonoBehaviour:
   jumpDuration: 0.3
   cardCheckRadius: 0.6
   visualRoot: {fileID: 1357839682}
-  animator: {fileID: 0}
+  animator: {fileID: 1357839683}
 --- !u!1001 &787297908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10603,6 +10603,11 @@ PrefabInstance:
 --- !u!4 &1357839682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4421855325139866685, guid: ace3f18b2f0b7594d94e41d00d7af78b, type: 3}
+  m_PrefabInstance: {fileID: 1357839681}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1357839683 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3013955962547953541, guid: ace3f18b2f0b7594d94e41d00d7af78b, type: 3}
   m_PrefabInstance: {fileID: 1357839681}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1367396744

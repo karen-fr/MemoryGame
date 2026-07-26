@@ -13,6 +13,7 @@ public static class Stage4CompleteSetup
 
         Stage4AnimatorSetup.SetupCharacterAnimations();
         Stage4GameplayPolishSetup.SetupGameplayUI();
+        Stage4AnimationRepairSetup.RepairCharacterAnimations();
 
         List<string> issues = ValidateReferences();
 
