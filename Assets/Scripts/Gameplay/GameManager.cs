@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameTimer gameTimer;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private EndPanelController endPanelController;
     [SerializeField] private int totalPairs = 4;
     [SerializeField] private float compareDelay = 0.6f;
 
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     private int matchedPairsCount;
     private bool isInputLocked;
     private bool isGameOver;
+    private bool hasGameStarted;
 
     private void OnEnable()
     {
@@ -39,7 +41,22 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("[GameManager] Start");
-        StartGame();
+        if (uiManager != null) uiManager.SetRestartCallback(RestartGame);
+
+        StartPanelController startPanel = FindFirstObjectByType<StartPanelController>();
+        if (startPanel != null && startPanel.isActiveAndEnabled)
+        {
+            // A start screen is installed: stay frozen (timer stopped, character locked) until
+            // it calls StartGame() in response to the player pressing the start button.
+            if (catController != null) catController.SetInputLocked(true);
+            if (endPanelController != null) endPanelController.Hide();
+        }
+        else
+        {
+            // No start screen installed yet — begin immediately so gameplay and animations
+            // can still be tested without the interface in place.
+            StartGame();
+        }
     }
 
     private void ResolveReferences()
@@ -47,20 +64,30 @@ public class GameManager : MonoBehaviour
         if (catController == null) catController = FindFirstObjectByType<CatGridController>();
         if (gameTimer == null) gameTimer = FindFirstObjectByType<GameTimer>();
         if (uiManager == null) uiManager = FindFirstObjectByType<UIManager>();
+        if (endPanelController == null) endPanelController = FindFirstObjectByType<EndPanelController>();
     }
 
     public void StartGame()
     {
+        Debug.Log("[GameManager] StartGame ejecutado");
+
+        if (hasGameStarted) return;
+        hasGameStarted = true;
+
         matchedPairsCount = 0;
         isGameOver = false;
         isInputLocked = false;
         firstCard = null;
         secondCard = null;
 
+        if (catController != null) catController.SetInputLocked(false);
+        if (endPanelController != null) endPanelController.Hide();
+
         if (uiManager != null)
         {
             uiManager.UpdateMatchesText(matchedPairsCount, totalPairs);
             uiManager.ShowMessage("Encuentra las parejas");
+            uiManager.HideRestartButton();
         }
 
         if (gameTimer != null) gameTimer.StartTimer();
@@ -88,6 +115,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator CompareCards()
     {
+        while (firstCard.IsAnimating || secondCard.IsAnimating)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(compareDelay);
 
         if (firstCard.PairId == secondCard.PairId)
@@ -107,6 +139,11 @@ public class GameManager : MonoBehaviour
             {
                 WinGame();
             }
+            else
+            {
+                Debug.Log("[GameManager] Reacción de pareja correcta");
+                if (catController != null) catController.PlayPairMatchReaction();
+            }
         }
         else
         {
@@ -115,6 +152,9 @@ public class GameManager : MonoBehaviour
 
             if (audioManager != null) audioManager.PlayMismatchSound();
             if (uiManager != null) uiManager.ShowMessage("Intenta otra vez");
+
+            Debug.Log("[GameManager] Reacción de pareja incorrecta");
+            if (catController != null) catController.PlayPairMismatchReaction();
         }
 
         firstCard = null;
@@ -143,7 +183,19 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
 
         if (gameTimer != null) gameTimer.StopTimer();
-        if (uiManager != null) uiManager.ShowMessage("¡Ganaste!");
+        if (catController != null)
+        {
+            catController.SetInputLocked(true);
+            catController.PlayWinCelebration();
+        }
+
+        const string message = "¡Ganaste!";
+        if (uiManager != null)
+        {
+            uiManager.ShowMessage(message);
+            uiManager.ShowRestartButton();
+        }
+        if (endPanelController != null) endPanelController.Show(message);
         if (audioManager != null) audioManager.PlayWinSound();
     }
 
@@ -153,7 +205,45 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
         isInputLocked = true;
+        if (catController != null)
+        {
+            catController.SetInputLocked(true);
+            catController.PlayLoseReaction();
+        }
 
-        if (uiManager != null) uiManager.ShowMessage("Se acabó el tiempo");
+        const string message = "Se acabó el tiempo";
+        if (uiManager != null)
+        {
+            uiManager.ShowMessage(message);
+            uiManager.ShowRestartButton();
+        }
+        if (endPanelController != null) endPanelController.Show(message);
+    }
+
+    public void RestartGame()
+    {
+        StopAllCoroutines();
+
+        matchedPairsCount = 0;
+        isGameOver = false;
+        isInputLocked = false;
+        firstCard = null;
+        secondCard = null;
+
+        foreach (MemoryCard card in FindObjectsByType<MemoryCard>(FindObjectsSortMode.None))
+        {
+            card.ResetCard();
+        }
+
+        if (catController != null) catController.ResetToInitialState();
+        if (gameTimer != null) gameTimer.StartTimer();
+        if (endPanelController != null) endPanelController.Hide();
+
+        if (uiManager != null)
+        {
+            uiManager.UpdateMatchesText(matchedPairsCount, totalPairs);
+            uiManager.ShowMessage("Encuentra las parejas");
+            uiManager.HideRestartButton();
+        }
     }
 }

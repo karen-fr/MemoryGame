@@ -11,6 +11,7 @@ public class CatGridController : MonoBehaviour
     [SerializeField] private float jumpDuration = 0.3f;
     [SerializeField] private float cardCheckRadius = 0.4f;
     [SerializeField] private Transform visualRoot;
+    [SerializeField] private Animator animator;
 
     public event Action<MemoryCard> CardSelected;
     public event Action<float> TrapTriggered;
@@ -19,6 +20,10 @@ public class CatGridController : MonoBehaviour
     private bool isMoving;
     private bool isJumping;
     private bool isLocked;
+    private bool isGameLocked;
+
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
 
     private Vector3 screenUpDirection = Vector3.forward;
     private Vector3 screenRightDirection = Vector3.right;
@@ -26,12 +31,79 @@ public class CatGridController : MonoBehaviour
     private void Start()
     {
         targetPosition = transform.position;
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
         CalculateScreenRelativeAxes();
 
         if (visualRoot == null)
         {
             Transform found = FindChildRecursive(transform, "CharacterVisual");
             visualRoot = found != null ? found : transform;
+        }
+
+        if (animator == null) animator = GetComponentInChildren<Animator>();
+    }
+
+    public void SetInputLocked(bool locked)
+    {
+        isGameLocked = locked;
+    }
+
+    public void PlayWinCelebration()
+    {
+        if (animator != null) animator.SetTrigger("Win");
+    }
+
+    public void PlayLoseReaction()
+    {
+        if (animator != null) animator.SetTrigger("Lose");
+    }
+
+    public void PlayPairMatchReaction()
+    {
+        if (animator == null) return;
+
+        // Clear the opposite reaction and any in-flight action trigger so they can't fire
+        // right on top of this one; IsMoving is left untouched since it isn't involved here.
+        animator.ResetTrigger("PairMismatch");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Trap");
+        animator.SetTrigger("PairMatch");
+    }
+
+    public void PlayPairMismatchReaction()
+    {
+        if (animator == null) return;
+
+        animator.ResetTrigger("PairMatch");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Trap");
+        animator.SetTrigger("PairMismatch");
+    }
+
+    public void ResetToInitialState()
+    {
+        StopAllCoroutines();
+        isMoving = false;
+        isJumping = false;
+        isLocked = false;
+        isGameLocked = false;
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        targetPosition = initialPosition;
+
+        if (visualRoot != null) visualRoot.rotation = initialRotation;
+
+        if (animator != null)
+        {
+            animator.ResetTrigger("Jump");
+            animator.ResetTrigger("Trap");
+            animator.ResetTrigger("Win");
+            animator.ResetTrigger("Lose");
+            animator.ResetTrigger("PairMatch");
+            animator.ResetTrigger("PairMismatch");
+            animator.SetBool("IsMoving", false);
+            animator.Play("idle", 0, 0f);
         }
     }
 
@@ -96,7 +168,7 @@ public class CatGridController : MonoBehaviour
         }
 
         if (isJumping) return;
-        if (isLocked) return;
+        if (isLocked || isGameLocked) return;
 
         ReadMovementInput();
         ReadActionInput();
@@ -121,6 +193,7 @@ public class CatGridController : MonoBehaviour
         {
             targetPosition = transform.position + direction * moveDistance;
             isMoving = true;
+            if (animator != null) animator.SetBool("IsMoving", true);
             RotateTowards(direction);
         }
     }
@@ -138,6 +211,7 @@ public class CatGridController : MonoBehaviour
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
+            if (animator != null) animator.SetTrigger("Jump");
             StartCoroutine(JumpAndSelect());
         }
     }
@@ -149,6 +223,7 @@ public class CatGridController : MonoBehaviour
         if (transform.position == targetPosition)
         {
             isMoving = false;
+            if (animator != null) animator.SetBool("IsMoving", false);
             CheckForTrap();
         }
     }
@@ -165,6 +240,7 @@ public class CatGridController : MonoBehaviour
         if (nearestTrap == null) return false;
 
         nearestTrap.NotifyDetected();
+        if (animator != null) animator.SetTrigger("Trap");
         TrapTriggered?.Invoke(nearestTrap.LockDuration);
         StartCoroutine(LockMovement(nearestTrap.LockDuration));
         return true;

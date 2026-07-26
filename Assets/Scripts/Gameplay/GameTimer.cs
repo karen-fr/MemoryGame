@@ -14,12 +14,17 @@ public class GameTimer : MonoBehaviour
     private void Start()
     {
         if (uiManager == null) uiManager = FindFirstObjectByType<UIManager>();
-        Debug.Log("[GameTimer] Start - iniciando en " + startTime + "s");
-        StartTimer();
+
+        // Do not auto-start: the countdown should not run before the player presses the
+        // start button. GameManager.StartGame() calls StartTimer() at the right moment.
+        currentTime = startTime;
+        UpdateTimeText();
     }
 
     public void StartTimer()
     {
+        Debug.Log("[GameTimer] Temporizador iniciado");
+
         currentTime = startTime;
         isRunning = true;
         UpdateTimeText();
