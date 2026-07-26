@@ -59,6 +59,28 @@ public class CatGridController : MonoBehaviour
         if (animator != null) animator.SetTrigger("Lose");
     }
 
+    public void PlayPairMatchReaction()
+    {
+        if (animator == null) return;
+
+        // Clear the opposite reaction and any in-flight action trigger so they can't fire
+        // right on top of this one; IsMoving is left untouched since it isn't involved here.
+        animator.ResetTrigger("PairMismatch");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Trap");
+        animator.SetTrigger("PairMatch");
+    }
+
+    public void PlayPairMismatchReaction()
+    {
+        if (animator == null) return;
+
+        animator.ResetTrigger("PairMatch");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Trap");
+        animator.SetTrigger("PairMismatch");
+    }
+
     public void ResetToInitialState()
     {
         StopAllCoroutines();
@@ -78,6 +100,8 @@ public class CatGridController : MonoBehaviour
             animator.ResetTrigger("Trap");
             animator.ResetTrigger("Win");
             animator.ResetTrigger("Lose");
+            animator.ResetTrigger("PairMatch");
+            animator.ResetTrigger("PairMismatch");
             animator.SetBool("IsMoving", false);
             animator.Play("idle", 0, 0f);
         }

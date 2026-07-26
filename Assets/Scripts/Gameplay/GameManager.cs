@@ -139,6 +139,11 @@ public class GameManager : MonoBehaviour
             {
                 WinGame();
             }
+            else
+            {
+                Debug.Log("[GameManager] Reacción de pareja correcta");
+                if (catController != null) catController.PlayPairMatchReaction();
+            }
         }
         else
         {
@@ -147,6 +152,9 @@ public class GameManager : MonoBehaviour
 
             if (audioManager != null) audioManager.PlayMismatchSound();
             if (uiManager != null) uiManager.ShowMessage("Intenta otra vez");
+
+            Debug.Log("[GameManager] Reacción de pareja incorrecta");
+            if (catController != null) catController.PlayPairMismatchReaction();
         }
 
         firstCard = null;

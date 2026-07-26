@@ -36,6 +36,10 @@ public static class Stage4AnimationRepairSetup
         // exact transitions Stage4AnimatorSetup already knows about by name.
         int removedPassTransitions = CleanupPassTransitions();
 
+        // 2b. Short pair-found / pair-mismatch reactions, as separate states so the existing
+        // terminal "celebracion" (final win) and comodín-driven "mareo" keep working unchanged.
+        string pairReactionReport = EnsurePairReactionStates();
+
         // 3. Each animation clip keeps its OWN Humanoid avatar (Create From This Model).
         // "Copy From Other Avatar" was tried and rejected: these FBX files don't share the
         // exact transform hierarchy as personaje1.fbx ("Group" not found), so copying the
@@ -157,6 +161,7 @@ public static class Stage4AnimationRepairSetup
         Debug.Log(
             "[Stage4AnimationRepairSetup] Completado.\n" +
             $"Transiciones con condición 'pass' eliminadas: {removedPassTransitions}\n" +
+            $"{pairReactionReport}\n" +
             $"Clips reimportados (Humanoid + Create From This Model): " +
             $"{(reimported.Count > 0 ? string.Join(", ", reimported) : "ninguno (ya estaban correctos)")}\n" +
             (invalidAvatars.Count > 0 ? $"Clips con Avatar inválido tras importar (revisar manualmente): {string.Join(", ", invalidAvatars)}\n" : "") +
@@ -251,6 +256,113 @@ public static class Stage4AnimationRepairSetup
         }
 
         return false;
+    }
+
+    private const string PairMatchReactionStateName = "pair-match-reaction";
+    private const string PairMismatchReactionStateName = "pair-mismatch-reaction";
+
+    private static string EnsurePairReactionStates()
+    {
+        AnimatorController controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath);
+        if (controller == null) return "Reacciones de pareja: no se pudo abrir el controller.";
+
+        AnimatorStateMachine stateMachine = controller.layers[0].stateMachine;
+
+        AnimatorState celebracion = FindState(stateMachine, "celebracion");
+        AnimatorState mareo = FindState(stateMachine, "mareo");
+        AnimatorState idle = FindState(stateMachine, "idle");
+
+        if (celebracion == null || mareo == null || idle == null)
+        {
+            return "Reacciones de pareja: no se encontraron los estados base 'celebracion'/'mareo'/'idle'; no se creó nada.";
+        }
+
+        bool changed = false;
+
+        if (!controller.parameters.Any(p => p.name == "PairMatch"))
+        {
+            controller.AddParameter("PairMatch", AnimatorControllerParameterType.Trigger);
+            changed = true;
+        }
+
+        if (!controller.parameters.Any(p => p.name == "PairMismatch"))
+        {
+            controller.AddParameter("PairMismatch", AnimatorControllerParameterType.Trigger);
+            changed = true;
+        }
+
+        bool matchCreated = EnsureReactionState(
+            stateMachine, PairMatchReactionStateName, celebracion.motion, idle, "PairMatch",
+            new Vector3(650f, 480f, 0f), ref changed);
+
+        bool mismatchCreated = EnsureReactionState(
+            stateMachine, PairMismatchReactionStateName, mareo.motion, idle, "PairMismatch",
+            new Vector3(650f, 600f, 0f), ref changed);
+
+        if (changed) EditorUtility.SetDirty(controller);
+
+        return "Reacciones de pareja: " +
+            $"pair-match-reaction {(matchCreated ? "creado" : "ya existía")}, " +
+            $"pair-mismatch-reaction {(mismatchCreated ? "creado" : "ya existía")}.";
+    }
+
+    // Creates (only if missing) a short reaction state that reuses an existing Motion, wires
+    // an Any State -> state transition on the given trigger, and a state -> idle exit-time
+    // transition back out. Safe to call repeatedly: every lookup is by name/destination first.
+    private static bool EnsureReactionState(
+        AnimatorStateMachine stateMachine, string stateName, Motion motion, AnimatorState idle,
+        string triggerName, Vector3 position, ref bool changed)
+    {
+        AnimatorState reactionState = FindState(stateMachine, stateName);
+        bool created = false;
+
+        if (reactionState == null)
+        {
+            reactionState = stateMachine.AddState(stateName, position);
+            reactionState.motion = motion;
+            reactionState.writeDefaultValues = true;
+            created = true;
+            changed = true;
+        }
+        else if (reactionState.motion != motion)
+        {
+            reactionState.motion = motion;
+            changed = true;
+        }
+
+        bool hasAnyStateEntry = stateMachine.anyStateTransitions.Any(t => t.destinationState == reactionState);
+        if (!hasAnyStateEntry)
+        {
+            AnimatorStateTransition entry = stateMachine.AddAnyStateTransition(reactionState);
+            entry.hasExitTime = false;
+            entry.canTransitionToSelf = false;
+            entry.duration = 0.15f;
+            entry.AddCondition(AnimatorConditionMode.If, 0, triggerName);
+            changed = true;
+        }
+
+        bool hasExitToIdle = reactionState.transitions.Any(t => t.destinationState == idle);
+        if (!hasExitToIdle)
+        {
+            AnimatorStateTransition exit = reactionState.AddTransition(idle);
+            exit.hasExitTime = true;
+            exit.exitTime = 0.9f;
+            exit.hasFixedDuration = true;
+            exit.duration = 0.25f;
+            changed = true;
+        }
+
+        return created;
+    }
+
+    private static AnimatorState FindState(AnimatorStateMachine stateMachine, string name)
+    {
+        foreach (ChildAnimatorState child in stateMachine.states)
+        {
+            if (child.state.name == name) return child.state;
+        }
+
+        return null;
     }
 
     private static Avatar FindSharedAvatar()
