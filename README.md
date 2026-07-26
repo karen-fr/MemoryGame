@@ -62,14 +62,6 @@ El jugador controla un gato
 | W A S D | Mover al personaje     |
 | Espacio | Saltar sobre un bloque |
 
----
-
-## Tecnologías utilizadas
-
-- Unity
-- C#
-- Git
-- GitHub
 
 ---
 
