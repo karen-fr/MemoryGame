@@ -42,15 +42,21 @@ public class CatGridController : MonoBehaviour
         }
 
         if (animator == null) animator = GetComponentInChildren<Animator>();
-
-        // The Animator Controller gates every transition behind this single bool
-        // (default false), so without it the state machine never leaves its entry state.
-        if (animator != null) animator.SetBool("pass", true);
     }
 
     public void SetInputLocked(bool locked)
     {
         isGameLocked = locked;
+    }
+
+    public void PlayWinCelebration()
+    {
+        if (animator != null) animator.SetTrigger("Win");
+    }
+
+    public void PlayLoseReaction()
+    {
+        if (animator != null) animator.SetTrigger("Lose");
     }
 
     public void ResetToInitialState()
@@ -65,6 +71,16 @@ public class CatGridController : MonoBehaviour
         targetPosition = initialPosition;
 
         if (visualRoot != null) visualRoot.rotation = initialRotation;
+
+        if (animator != null)
+        {
+            animator.ResetTrigger("Jump");
+            animator.ResetTrigger("Trap");
+            animator.ResetTrigger("Win");
+            animator.ResetTrigger("Lose");
+            animator.SetBool("IsMoving", false);
+            animator.Play("idle", 0, 0f);
+        }
     }
 
     private static Transform FindChildRecursive(Transform parent, string childName)
@@ -153,6 +169,7 @@ public class CatGridController : MonoBehaviour
         {
             targetPosition = transform.position + direction * moveDistance;
             isMoving = true;
+            if (animator != null) animator.SetBool("IsMoving", true);
             RotateTowards(direction);
         }
     }
@@ -170,6 +187,7 @@ public class CatGridController : MonoBehaviour
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
+            if (animator != null) animator.SetTrigger("Jump");
             StartCoroutine(JumpAndSelect());
         }
     }
@@ -181,6 +199,7 @@ public class CatGridController : MonoBehaviour
         if (transform.position == targetPosition)
         {
             isMoving = false;
+            if (animator != null) animator.SetBool("IsMoving", false);
             CheckForTrap();
         }
     }
@@ -197,6 +216,7 @@ public class CatGridController : MonoBehaviour
         if (nearestTrap == null) return false;
 
         nearestTrap.NotifyDetected();
+        if (animator != null) animator.SetTrigger("Trap");
         TrapTriggered?.Invoke(nearestTrap.LockDuration);
         StartCoroutine(LockMovement(nearestTrap.LockDuration));
         return true;
