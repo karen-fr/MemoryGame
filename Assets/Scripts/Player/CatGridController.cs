@@ -11,6 +11,7 @@ public class CatGridController : MonoBehaviour
     [SerializeField] private float jumpDuration = 0.3f;
     [SerializeField] private float cardCheckRadius = 0.4f;
     [SerializeField] private Transform visualRoot;
+    [SerializeField] private Animator animator;
 
     public event Action<MemoryCard> CardSelected;
     public event Action<float> TrapTriggered;
@@ -19,6 +20,10 @@ public class CatGridController : MonoBehaviour
     private bool isMoving;
     private bool isJumping;
     private bool isLocked;
+    private bool isGameLocked;
+
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
 
     private Vector3 screenUpDirection = Vector3.forward;
     private Vector3 screenRightDirection = Vector3.right;
@@ -26,6 +31,8 @@ public class CatGridController : MonoBehaviour
     private void Start()
     {
         targetPosition = transform.position;
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
         CalculateScreenRelativeAxes();
 
         if (visualRoot == null)
@@ -33,6 +40,31 @@ public class CatGridController : MonoBehaviour
             Transform found = FindChildRecursive(transform, "CharacterVisual");
             visualRoot = found != null ? found : transform;
         }
+
+        if (animator == null) animator = GetComponentInChildren<Animator>();
+
+        // The Animator Controller gates every transition behind this single bool
+        // (default false), so without it the state machine never leaves its entry state.
+        if (animator != null) animator.SetBool("pass", true);
+    }
+
+    public void SetInputLocked(bool locked)
+    {
+        isGameLocked = locked;
+    }
+
+    public void ResetToInitialState()
+    {
+        StopAllCoroutines();
+        isMoving = false;
+        isJumping = false;
+        isLocked = false;
+        isGameLocked = false;
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        targetPosition = initialPosition;
+
+        if (visualRoot != null) visualRoot.rotation = initialRotation;
     }
 
     private static Transform FindChildRecursive(Transform parent, string childName)
@@ -96,7 +128,7 @@ public class CatGridController : MonoBehaviour
         }
 
         if (isJumping) return;
-        if (isLocked) return;
+        if (isLocked || isGameLocked) return;
 
         ReadMovementInput();
         ReadActionInput();

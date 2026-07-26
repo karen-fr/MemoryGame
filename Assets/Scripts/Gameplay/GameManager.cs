@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("[GameManager] Start");
+        if (uiManager != null) uiManager.SetRestartCallback(RestartGame);
         StartGame();
     }
 
@@ -88,6 +89,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator CompareCards()
     {
+        while (firstCard.IsAnimating || secondCard.IsAnimating)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(compareDelay);
 
         if (firstCard.PairId == secondCard.PairId)
@@ -153,7 +159,38 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
         isInputLocked = true;
+        if (catController != null) catController.SetInputLocked(true);
 
-        if (uiManager != null) uiManager.ShowMessage("Se acabó el tiempo");
+        if (uiManager != null)
+        {
+            uiManager.ShowMessage("Se acabó el tiempo");
+            uiManager.ShowRestartButton();
+        }
+    }
+
+    public void RestartGame()
+    {
+        StopAllCoroutines();
+
+        matchedPairsCount = 0;
+        isGameOver = false;
+        isInputLocked = false;
+        firstCard = null;
+        secondCard = null;
+
+        foreach (MemoryCard card in FindObjectsByType<MemoryCard>(FindObjectsSortMode.None))
+        {
+            card.ResetCard();
+        }
+
+        if (catController != null) catController.ResetToInitialState();
+        if (gameTimer != null) gameTimer.StartTimer();
+
+        if (uiManager != null)
+        {
+            uiManager.UpdateMatchesText(matchedPairsCount, totalPairs);
+            uiManager.ShowMessage("Encuentra las parejas");
+            uiManager.HideRestartButton();
+        }
     }
 }

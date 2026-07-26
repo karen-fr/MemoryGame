@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,12 +10,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text matchesText;
     [SerializeField] private TMP_Text messageText;
+    [SerializeField] private Button restartButton;
 
     private void Awake()
     {
         if (timeText == null) timeText = FindTextByName("TimeText");
         if (matchesText == null) matchesText = FindTextByName("MatchesText");
         if (messageText == null) messageText = FindTextByName("MessageText");
+        if (restartButton == null) restartButton = FindButtonByName("RestartButton");
 
         EnsureVisible(timeText);
         EnsureVisible(matchesText);
@@ -22,8 +26,36 @@ public class UIManager : MonoBehaviour
         if (timeText != null) timeText.text = "00:45";
         if (matchesText != null) matchesText.text = "0 / 4";
         if (messageText != null) messageText.text = "Encuentra las parejas";
+        if (restartButton != null) restartButton.gameObject.SetActive(false);
 
         Debug.Log("[UIManager] Awake - UI inicializada");
+    }
+
+    public void SetRestartCallback(UnityAction callback)
+    {
+        if (restartButton == null) return;
+
+        restartButton.onClick.RemoveAllListeners();
+        restartButton.onClick.AddListener(callback);
+    }
+
+    public void ShowRestartButton()
+    {
+        if (restartButton != null) restartButton.gameObject.SetActive(true);
+    }
+
+    public void HideRestartButton()
+    {
+        if (restartButton != null) restartButton.gameObject.SetActive(false);
+    }
+
+    private Button FindButtonByName(string objectName)
+    {
+        GameObject canvasObject = GameObject.Find(CanvasObjectName);
+        if (canvasObject == null) return null;
+
+        Transform found = FindChildByName(canvasObject.transform, objectName);
+        return found != null ? found.GetComponent<Button>() : null;
     }
 
     public void UpdateTimeText(float timeInSeconds)
