@@ -1154,9 +1154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 116955687}
-  jumpClip: {fileID: 8300000, guid: b1761f93dfb20324789395d44b497edf, type: 3}
+  flipCardClip: {fileID: 8300000, guid: 483f43662865f1448b711ebd9e0a4702, type: 3}
   matchClip: {fileID: 8300000, guid: 786f2949a9f21724d895f839c4754eb8, type: 3}
-  mismatchClip: {fileID: 8300000, guid: 84124d95c854f3e4ab902126da8be11b, type: 3}
+  errorClip: {fileID: 8300000, guid: f1263eaac9c3dcf45a6ec1fede4bdab3, type: 3}
   winClip: {fileID: 8300000, guid: b195ace5af09f8640a92fed2746d0270, type: 3}
 --- !u!114 &116955689
 MonoBehaviour:
