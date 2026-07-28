@@ -1171,11 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTime: 45
-<<<<<<< Updated upstream
   uiManager: {fileID: 794923750}
-=======
-  uiManager: {fileID: 0}
->>>>>>> Stashed changes
 --- !u!114 &116955690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1190,11 +1186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catController: {fileID: 786579303}
   gameTimer: {fileID: 116955689}
-<<<<<<< Updated upstream
   uiManager: {fileID: 794923750}
-=======
-  uiManager: {fileID: 0}
->>>>>>> Stashed changes
   audioManager: {fileID: 116955688}
   endPanelController: {fileID: 1597761273}
   totalPairs: 4
@@ -1247,13 +1239,10 @@ MonoBehaviour:
   flipDuration: 0.3
   matchBounceHeight: 0.15
   flipRotationAxis: {x: 1, y: 0, z: 0}
-<<<<<<< Updated upstream
   flipDirection: 1
   cardRenderer: {fileID: 359976256}
   flipPivot: {fileID: 1502044177}
   faceOrientationPivot: {fileID: 1083679948}
-=======
->>>>>>> Stashed changes
 --- !u!1 &151847156 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4255396842627421513, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
@@ -1770,13 +1759,10 @@ MonoBehaviour:
   flipDuration: 0.3
   matchBounceHeight: 0.15
   flipRotationAxis: {x: 1, y: 0, z: 0}
-<<<<<<< Updated upstream
   flipDirection: 1
   cardRenderer: {fileID: 1114964455}
   flipPivot: {fileID: 1814102456}
   faceOrientationPivot: {fileID: 1137179056}
-=======
->>>>>>> Stashed changes
 --- !u!114 &192285142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1793,13 +1779,10 @@ MonoBehaviour:
   flipDuration: 0.3
   matchBounceHeight: 0.15
   flipRotationAxis: {x: 1, y: 0, z: 0}
-<<<<<<< Updated upstream
   flipDirection: 1
   cardRenderer: {fileID: 2041808630}
   flipPivot: {fileID: 1255222654}
   faceOrientationPivot: {fileID: 531501746}
-=======
->>>>>>> Stashed changes
 --- !u!1001 &194775632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1988,23 +1971,17 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4255396842627421513, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 798935572}
-    - targetCorrespondingSourceObject: {fileID: 4255396842627421513, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 798935573}
   m_SourcePrefab: {fileID: 100100000, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
 --- !u!4 &206660235 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3478437307744260083, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
   m_PrefabInstance: {fileID: 206660234}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &206660236 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1789673322231411160, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
   m_PrefabInstance: {fileID: 206660234}
   m_PrefabAsset: {fileID: 0}
-=======
->>>>>>> Stashed changes
 --- !u!1001 &216733301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2099,12 +2076,8 @@ Transform:
   m_LocalPosition: {x: 1.462, y: 2.2841, z: -1.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-<<<<<<< Updated upstream
   m_Children:
   - {fileID: 1357839682}
-=======
-  m_Children: []
->>>>>>> Stashed changes
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!223 &227904006
@@ -2915,15 +2888,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-<<<<<<< Updated upstream
   m_Children:
   - {fileID: 110490682}
   - {fileID: 1591438636}
   - {fileID: 1597761272}
   - {fileID: 1724511210}
-=======
-  m_Children: []
->>>>>>> Stashed changes
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3022,35 +2991,17 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4255396842627421513, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 140260662}
-    - targetCorrespondingSourceObject: {fileID: 4255396842627421513, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 359976256}
   m_SourcePrefab: {fileID: 100100000, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
 --- !u!4 &359976255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3478437307744260083, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
   m_PrefabInstance: {fileID: 359976254}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &359976256 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1789673322231411160, guid: 2837ad2126de52f4ead586702a5d9c0e, type: 3}
   m_PrefabInstance: {fileID: 359976254}
   m_PrefabAsset: {fileID: 0}
-=======
---- !u!114 &359976256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151847156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1001 &387845240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3459,13 +3410,10 @@ MonoBehaviour:
   flipDuration: 0.3
   matchBounceHeight: 0.15
   flipRotationAxis: {x: 1, y: 0, z: 0}
-<<<<<<< Updated upstream
   flipDirection: 1
   cardRenderer: {fileID: 664053703}
   flipPivot: {fileID: 1680185254}
   faceOrientationPivot: {fileID: 158670538}
-=======
->>>>>>> Stashed changes
 --- !u!1001 &468736411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4407,13 +4355,10 @@ MonoBehaviour:
   flipDuration: 0.3
   matchBounceHeight: 0.15
   flipRotationAxis: {x: 1, y: 0, z: 0}
-<<<<<<< Updated upstream
   flipDirection: 1
   cardRenderer: {fileID: 1949399988}
   flipPivot: {fileID: 501264511}
   faceOrientationPivot: {fileID: 307312395}
-=======
->>>>>>> Stashed changes
 --- !u!1001 &531360967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5304,35 +5249,17 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3124136659273754122, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
       insertIndex: -1
       addedObject: {fileID: 447712782}
-    - targetCorrespondingSourceObject: {fileID: 3124136659273754122, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 664053703}
   m_SourcePrefab: {fileID: 100100000, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
 --- !u!4 &664053702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2310620463060614320, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
   m_PrefabInstance: {fileID: 664053701}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &664053703 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 613385906471125659, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
   m_PrefabInstance: {fileID: 664053701}
   m_PrefabAsset: {fileID: 0}
-=======
---- !u!114 &664053703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261973069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1 &675398922 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3124136659273754122, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
@@ -5503,7 +5430,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5450567846600589905, guid: 785850e471125184688a8ddd77f7be81, type: 3}
   m_PrefabInstance: {fileID: 2041808628}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!1001 &740195059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5601,8 +5527,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d171e7c2b67c9004692661e6669cb38c, type: 3}
-=======
->>>>>>> Stashed changes
 --- !u!1001 &769096466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6150,10 +6074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 551631864}
-<<<<<<< Updated upstream
   - component: {fileID: 794923750}
-=======
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: UIController
   m_TagString: Untagged
@@ -6193,7 +6114,6 @@ MonoBehaviour:
   flipDuration: 0.3
   matchBounceHeight: 0.15
   flipRotationAxis: {x: 1, y: 0, z: 0}
-<<<<<<< Updated upstream
   flipDirection: 1
   cardRenderer: {fileID: 206660236}
   flipPivot: {fileID: 1264344827}
@@ -6244,15 +6164,11 @@ CanvasRenderer:
   m_GameObject: {fileID: 804402719}
   m_CullTransparentMesh: 1
 --- !u!114 &804402722
-=======
---- !u!114 &798935573
->>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 804402719}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -6339,14 +6255,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-=======
-  m_GameObject: {fileID: 330530419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1001 &814364446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7685,13 +7593,10 @@ MonoBehaviour:
   flipDuration: 0.3
   matchBounceHeight: 0.15
   flipRotationAxis: {x: 1, y: 0, z: 0}
-<<<<<<< Updated upstream
   flipDirection: 1
   cardRenderer: {fileID: 1981370429}
   flipPivot: {fileID: 632617617}
   faceOrientationPivot: {fileID: 1552546818}
-=======
->>>>>>> Stashed changes
 --- !u!1001 &991233750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8346,18 +8251,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5450567846600589905, guid: 785850e471125184688a8ddd77f7be81, type: 3}
       insertIndex: -1
-<<<<<<< Updated upstream
       addedObject: {fileID: 1098728067}
-=======
-      addedObject: {fileID: 1098728065}
->>>>>>> Stashed changes
   m_SourcePrefab: {fileID: 100100000, guid: 785850e471125184688a8ddd77f7be81, type: 3}
 --- !u!4 &1098728064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4679132503808350443, guid: 785850e471125184688a8ddd77f7be81, type: 3}
   m_PrefabInstance: {fileID: 1098728063}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &1098728065 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7528971920620103360, guid: 785850e471125184688a8ddd77f7be81, type: 3}
@@ -8369,15 +8269,11 @@ GameObject:
   m_PrefabInstance: {fileID: 1098728063}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1098728067
-=======
---- !u!114 &1098728065
->>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 1098728066}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -8392,14 +8288,6 @@ MonoBehaviour:
   cardRenderer: {fileID: 1098728065}
   flipPivot: {fileID: 1993242060}
   faceOrientationPivot: {fileID: 1551453374}
-=======
-  m_GameObject: {fileID: 162275869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1001 &1114964453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8491,16 +8379,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3124136659273754122, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
       insertIndex: -1
       addedObject: {fileID: 177777868}
-    - targetCorrespondingSourceObject: {fileID: 3124136659273754122, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1114964455}
   m_SourcePrefab: {fileID: 100100000, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
 --- !u!4 &1114964454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2310620463060614320, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
   m_PrefabInstance: {fileID: 1114964453}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &1114964455 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 613385906471125659, guid: 02ab552049870fb42b68ec4adff2b192, type: 3}
@@ -8608,15 +8492,10 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 5a77164ec6b9fda469586590d64766e6, type: 3}
 --- !u!1 &1137179055
 GameObject:
-=======
---- !u!114 &1114964455
-MonoBehaviour:
->>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1137179056}
@@ -8643,14 +8522,6 @@ Transform:
   - {fileID: 1114964454}
   m_Father: {fileID: 1814102456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
-  m_GameObject: {fileID: 675398922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1001 &1137492478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11344,32 +11215,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-<<<<<<< Updated upstream
     m_AddedComponents: []
-=======
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7678521775048841957, guid: 432bdc0344c4896499e3b3cea0a7e76c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1511829276}
->>>>>>> Stashed changes
   m_SourcePrefab: {fileID: 100100000, guid: 432bdc0344c4896499e3b3cea0a7e76c, type: 3}
 --- !u!4 &1511829275 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7044833179723825247, guid: 432bdc0344c4896499e3b3cea0a7e76c, type: 3}
   m_PrefabInstance: {fileID: 1511829274}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1511829276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533768154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1516896602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13644,7 +13496,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-<<<<<<< Updated upstream
   m_SourcePrefab: {fileID: 100100000, guid: 2ca3ed95ee892bc4b8f578bb02de07ce, type: 3}
 --- !u!1001 &1869619829
 PrefabInstance:
@@ -13743,9 +13594,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aec5398c0e617a49806d7be256eddad, type: 3}
-=======
-  m_SourcePrefab: {fileID: 100100000, guid: a59e91ab3ea8ce447b6aec068da6ec92, type: 3}
->>>>>>> Stashed changes
 --- !u!1001 &1904448110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14076,35 +13924,17 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9161624408035260355, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 523938499}
-    - targetCorrespondingSourceObject: {fileID: 9161624408035260355, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1949399988}
   m_SourcePrefab: {fileID: 100100000, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
 --- !u!4 &1949399987 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8390048288506457465, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
   m_PrefabInstance: {fileID: 1949399986}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &1949399988 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6700413266176611154, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
   m_PrefabInstance: {fileID: 1949399986}
   m_PrefabAsset: {fileID: 0}
-=======
---- !u!114 &1949399988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 644854973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1 &1973963395
 GameObject:
   m_ObjectHideFlags: 0
@@ -14232,35 +14062,17 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9161624408035260355, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 981836553}
-    - targetCorrespondingSourceObject: {fileID: 9161624408035260355, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1981370429}
   m_SourcePrefab: {fileID: 100100000, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
 --- !u!4 &1981370428 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8390048288506457465, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
   m_PrefabInstance: {fileID: 1981370427}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &1981370429 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6700413266176611154, guid: f6c3dd702ae3408418ac75bdb7ffb28e, type: 3}
   m_PrefabInstance: {fileID: 1981370427}
   m_PrefabAsset: {fileID: 0}
-=======
---- !u!114 &1981370429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201071364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1001 &1991037572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14704,31 +14516,23 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5450567846600589905, guid: 785850e471125184688a8ddd77f7be81, type: 3}
       insertIndex: -1
       addedObject: {fileID: 192285142}
-    - targetCorrespondingSourceObject: {fileID: 5450567846600589905, guid: 785850e471125184688a8ddd77f7be81, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2041808630}
   m_SourcePrefab: {fileID: 100100000, guid: 785850e471125184688a8ddd77f7be81, type: 3}
 --- !u!4 &2041808629 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4679132503808350443, guid: 785850e471125184688a8ddd77f7be81, type: 3}
   m_PrefabInstance: {fileID: 2041808628}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!23 &2041808630 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7528971920620103360, guid: 785850e471125184688a8ddd77f7be81, type: 3}
   m_PrefabInstance: {fileID: 2041808628}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &2054693674
-=======
---- !u!114 &2041808630
->>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -14737,14 +14541,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Asset: {fileID: 936904854}
   m_ActionId: 0489e84a-4833-4c40-bfae-cea84b696689
-=======
-  m_GameObject: {fileID: 725763863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
->>>>>>> Stashed changes
 --- !u!1001 &2066232393
 PrefabInstance:
   m_ObjectHideFlags: 0
