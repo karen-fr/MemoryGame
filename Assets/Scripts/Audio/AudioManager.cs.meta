@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: feb674060b81f47bfad36e7abc6ee20c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - audioSource: {instanceID: 0}
+  - jumpClip: {fileID: 8300000, guid: 483f43662865f1448b711ebd9e0a4702, type: 3}
+  - matchClip: {fileID: 8300000, guid: 605b0e677fd3b404ab61451a7b15592f, type: 3}
+  - mismatchClip: {fileID: 8300000, guid: f1263eaac9c3dcf45a6ec1fede4bdab3, type: 3}
+  - winClip: {fileID: 8300000, guid: b195ace5af09f8640a92fed2746d0270, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

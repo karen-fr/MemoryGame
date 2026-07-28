@@ -1154,10 +1154,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 116955687}
-  jumpClip: {fileID: 0}
-  matchClip: {fileID: 0}
-  mismatchClip: {fileID: 0}
-  winClip: {fileID: 0}
+  jumpClip: {fileID: 8300000, guid: b1761f93dfb20324789395d44b497edf, type: 3}
+  matchClip: {fileID: 8300000, guid: 786f2949a9f21724d895f839c4754eb8, type: 3}
+  mismatchClip: {fileID: 8300000, guid: 84124d95c854f3e4ab902126da8be11b, type: 3}
+  winClip: {fileID: 8300000, guid: b195ace5af09f8640a92fed2746d0270, type: 3}
 --- !u!114 &116955689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4024,7 +4024,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 501264511}
-  - component: {fileID: 501264512}
   - component: {fileID: 501264513}
   m_Layer: 0
   m_Name: FlipPivot_pareja 1
@@ -4049,18 +4048,6 @@ Transform:
   - {fileID: 307312395}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &501264512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501264510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &501264513
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5051,7 +5038,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 632617617}
-  - component: {fileID: 632617618}
   - component: {fileID: 632617619}
   m_Layer: 0
   m_Name: FlipPivot_pareja 1 (1)
@@ -5076,18 +5062,6 @@ Transform:
   - {fileID: 1552546818}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &632617618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632617616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &632617619
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9924,7 +9898,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1255222654}
-  - component: {fileID: 1255222655}
   - component: {fileID: 1255222656}
   m_Layer: 0
   m_Name: FlipPivot_pareja4
@@ -9949,18 +9922,6 @@ Transform:
   - {fileID: 531501746}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1255222655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255222653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1255222656
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10067,7 +10028,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1264344827}
-  - component: {fileID: 1264344828}
   - component: {fileID: 1264344829}
   m_Layer: 0
   m_Name: FlipPivot_pareja3
@@ -10092,18 +10052,6 @@ Transform:
   - {fileID: 1244329892}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1264344828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1264344826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1264344829
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11570,7 +11518,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1502044177}
-  - component: {fileID: 1502044178}
   - component: {fileID: 1502044179}
   m_Layer: 0
   m_Name: FlipPivot_pareja3 (1)
@@ -11595,18 +11542,6 @@ Transform:
   - {fileID: 1083679948}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1502044178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1502044176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1502044179
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11779,9 +11714,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7678521775048841957, guid: 432bdc0344c4896499e3b3cea0a7e76c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1511829276}
-    - targetCorrespondingSourceObject: {fileID: 7678521775048841957, guid: 432bdc0344c4896499e3b3cea0a7e76c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1511829277}
   m_SourcePrefab: {fileID: 100100000, guid: 432bdc0344c4896499e3b3cea0a7e76c, type: 3}
 --- !u!4 &1511829275 stripped
 Transform:
@@ -11885,18 +11817,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1511829277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699630518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1516896602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12966,7 +12886,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1680185254}
-  - component: {fileID: 1680185255}
   - component: {fileID: 1680185256}
   m_Layer: 0
   m_Name: FlipPivot_pareja2 (1)
@@ -12991,18 +12910,6 @@ Transform:
   - {fileID: 158670538}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1680185255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680185253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1680185256
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14098,7 +14005,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1814102456}
-  - component: {fileID: 1814102457}
   - component: {fileID: 1814102458}
   m_Layer: 0
   m_Name: FlipPivot_pareja2
@@ -14123,18 +14029,6 @@ Transform:
   - {fileID: 1137179056}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1814102457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814102455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1814102458
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15061,7 +14955,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1993242060}
-  - component: {fileID: 1993242061}
   - component: {fileID: 1993242062}
   m_Layer: 0
   m_Name: FlipPivot_pareja4 (1)
@@ -15086,18 +14979,6 @@ Transform:
   - {fileID: 1551453374}
   m_Father: {fileID: 1973963396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1993242061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993242059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ea587d4f10ec6488933a7f1df78c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1993242062
 AudioSource:
   m_ObjectHideFlags: 0
