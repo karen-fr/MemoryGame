@@ -41,7 +41,48 @@ public class UIManager : MonoBehaviour
 
     public void ShowRestartButton()
     {
-        if (restartButton != null) restartButton.gameObject.SetActive(true);
+        if (restartButton == null) restartButton = FindButtonByName("RestartButton");
+        if (restartButton == null)
+        {
+            Debug.LogWarning("[UIManager] ShowRestartButton: no se encontró RestartButton.");
+            return;
+        }
+
+        restartButton.gameObject.SetActive(true);
+        restartButton.interactable = true;
+        restartButton.transform.SetAsLastSibling();
+
+        Image image = restartButton.GetComponent<Image>();
+        if (image != null) image.raycastTarget = true;
+
+        // Only the button's own CanvasGroup matters now: RestartButton is a direct child of
+        // GameplayCanvas, so it never sits under a panel's CanvasGroup that could be inactive.
+        CanvasGroup canvasGroup = restartButton.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+
+        Transform buttonTransform = restartButton.transform;
+        Debug.Log("[UIManager] RestartButton mostrado" +
+            $"\npath={GetHierarchyPath(buttonTransform)}" +
+            $"\nactiveSelf={restartButton.gameObject.activeSelf}" +
+            $"\nactiveInHierarchy={restartButton.gameObject.activeInHierarchy}" +
+            $"\nposition={buttonTransform.position}" +
+            $"\nparent={(buttonTransform.parent != null ? buttonTransform.parent.name : "null")}");
+    }
+
+    private static string GetHierarchyPath(Transform t)
+    {
+        string path = t.name;
+        for (Transform current = t.parent; current != null; current = current.parent)
+        {
+            path = current.name + "/" + path;
+        }
+
+        return path;
     }
 
     public void HideRestartButton()
