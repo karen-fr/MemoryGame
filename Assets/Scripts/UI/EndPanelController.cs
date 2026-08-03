@@ -15,7 +15,18 @@ public class EndPanelController : MonoBehaviour
     public void Show(string message)
     {
         if (resultText != null) resultText.text = message;
-        if (panelRoot != null) panelRoot.SetActive(true);
+        if (panelRoot == null) return;
+
+        panelRoot.SetActive(true);
+        panelRoot.transform.SetAsLastSibling();
+
+        CanvasGroup canvasGroup = panelRoot.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
     }
 
     public void Hide()

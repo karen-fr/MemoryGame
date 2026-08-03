@@ -193,6 +193,7 @@ public class GameManager : MonoBehaviour
         }
 
         const string message = "¡Ganaste!";
+        Debug.Log("[GameManager] Mostrando reinicio por victoria");
         if (uiManager != null)
         {
             uiManager.ShowMessage(message);
@@ -222,6 +223,7 @@ public class GameManager : MonoBehaviour
         }
 
         const string message = "Se acabó el tiempo";
+        Debug.Log("[GameManager] Mostrando reinicio por derrota");
         if (uiManager != null)
         {
             uiManager.ShowMessage(message);
@@ -240,6 +242,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        Debug.Log("[GameManager] RestartGame ejecutado");
         StopAllCoroutines();
 
         matchedPairsCount = 0;
