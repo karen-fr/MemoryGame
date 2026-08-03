@@ -46,15 +46,11 @@ public class GameManager : MonoBehaviour
         StartPanelController startPanel = FindFirstObjectByType<StartPanelController>();
         if (startPanel != null && startPanel.isActiveAndEnabled)
         {
-            // A start screen is installed: stay frozen (timer stopped, character locked) until
-            // it calls StartGame() in response to the player pressing the start button.
             if (catController != null) catController.SetInputLocked(true);
             if (endPanelController != null) endPanelController.Hide();
         }
         else
         {
-            // No start screen installed yet — begin immediately so gameplay and animations
-            // can still be tested without the interface in place.
             StartGame();
         }
     }
@@ -91,6 +87,13 @@ public class GameManager : MonoBehaviour
         }
 
         if (gameTimer != null) gameTimer.StartTimer();
+
+        // Sonido de inicio + musica principal del juego
+        if (audioManager != null)
+        {
+            audioManager.PlayStartSound();
+            audioManager.PlayBackgroundMusic();
+        }
     }
 
     private void HandleCardSelected(MemoryCard card)
@@ -99,7 +102,7 @@ public class GameManager : MonoBehaviour
         if (card.State != CardState.Hidden) return;
 
         card.Reveal();
-        if (audioManager != null) audioManager.PlayJumpSound();
+        if (audioManager != null) audioManager.PlayFlipCardSound();
 
         if (firstCard == null)
         {
@@ -141,7 +144,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("[GameManager] Reacción de pareja correcta");
+                Debug.Log("[GameManager] Reaccion de pareja correcta");
                 if (catController != null) catController.PlayPairMatchReaction();
             }
         }
@@ -150,10 +153,10 @@ public class GameManager : MonoBehaviour
             firstCard.Hide();
             secondCard.Hide();
 
-            if (audioManager != null) audioManager.PlayMismatchSound();
+            if (audioManager != null) audioManager.PlayErrorSound();
             if (uiManager != null) uiManager.ShowMessage("Intenta otra vez");
 
-            Debug.Log("[GameManager] Reacción de pareja incorrecta");
+            Debug.Log("[GameManager] Reaccion de pareja incorrecta");
             if (catController != null) catController.PlayPairMismatchReaction();
         }
 
@@ -196,7 +199,14 @@ public class GameManager : MonoBehaviour
             uiManager.ShowRestartButton();
         }
         if (endPanelController != null) endPanelController.Show(message);
-        if (audioManager != null) audioManager.PlayWinSound();
+
+        // Detiene la musica principal y reproduce Victory + Finish juntos
+        if (audioManager != null)
+        {
+            audioManager.StopBackgroundMusic();
+            audioManager.PlayWinSound();
+            audioManager.PlayFinishSound();
+        }
     }
 
     private void HandleTimeUp()
@@ -218,6 +228,14 @@ public class GameManager : MonoBehaviour
             uiManager.ShowRestartButton();
         }
         if (endPanelController != null) endPanelController.Show(message);
+
+        // Detiene la musica principal y reproduce Loss + Finish juntos
+        if (audioManager != null)
+        {
+            audioManager.StopBackgroundMusic();
+            audioManager.PlayLossSound();
+            audioManager.PlayFinishSound();
+        }
     }
 
     public void RestartGame()
