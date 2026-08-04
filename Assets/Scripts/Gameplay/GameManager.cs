@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
             catController.PlayLoseReaction();
         }
 
-        const string message = "Se acabó el tiempo";
+        const string message = "Se acabo el tiempo";
         Debug.Log("[GameManager] Mostrando reinicio por derrota");
         if (uiManager != null)
         {
