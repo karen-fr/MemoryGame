@@ -12,6 +12,7 @@ public class CatGridController : MonoBehaviour
     [SerializeField] private float cardCheckRadius = 0.4f;
     [SerializeField] private Transform visualRoot;
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioManager audioManager;
 
     public event Action<MemoryCard> CardSelected;
     public event Action<float> TrapTriggered;
@@ -28,6 +29,10 @@ public class CatGridController : MonoBehaviour
     private Vector3 screenUpDirection = Vector3.forward;
     private Vector3 screenRightDirection = Vector3.right;
 
+    // 🔥 Control de pasos
+    private float stepTimer = 0f;
+    private const float STEP_INTERVAL = 0.3f;
+
     private void Start()
     {
         targetPosition = transform.position;
@@ -42,29 +47,20 @@ public class CatGridController : MonoBehaviour
         }
 
         if (animator == null) animator = GetComponentInChildren<Animator>();
+
+        if (audioManager == null)
+        {
+            audioManager = FindFirstObjectByType<AudioManager>();
+        }
     }
 
-    public void SetInputLocked(bool locked)
-    {
-        isGameLocked = locked;
-    }
-
-    public void PlayWinCelebration()
-    {
-        if (animator != null) animator.SetTrigger("Win");
-    }
-
-    public void PlayLoseReaction()
-    {
-        if (animator != null) animator.SetTrigger("Lose");
-    }
+    public void SetInputLocked(bool locked) { isGameLocked = locked; }
+    public void PlayWinCelebration() { if (animator != null) animator.SetTrigger("Win"); }
+    public void PlayLoseReaction() { if (animator != null) animator.SetTrigger("Lose"); }
 
     public void PlayPairMatchReaction()
     {
         if (animator == null) return;
-
-        // Clear the opposite reaction and any in-flight action trigger so they can't fire
-        // right on top of this one; IsMoving is left untouched since it isn't involved here.
         animator.ResetTrigger("PairMismatch");
         animator.ResetTrigger("Jump");
         animator.ResetTrigger("Trap");
@@ -74,7 +70,6 @@ public class CatGridController : MonoBehaviour
     public void PlayPairMismatchReaction()
     {
         if (animator == null) return;
-
         animator.ResetTrigger("PairMatch");
         animator.ResetTrigger("Jump");
         animator.ResetTrigger("Trap");
@@ -91,6 +86,7 @@ public class CatGridController : MonoBehaviour
         transform.position = initialPosition;
         transform.rotation = initialRotation;
         targetPosition = initialPosition;
+        stepTimer = 0f;
 
         if (visualRoot != null) visualRoot.rotation = initialRotation;
 
@@ -112,11 +108,9 @@ public class CatGridController : MonoBehaviour
         foreach (Transform child in parent)
         {
             if (child.name == childName) return child;
-
             Transform result = FindChildRecursive(child, childName);
             if (result != null) return result;
         }
-
         return null;
     }
 
@@ -161,12 +155,7 @@ public class CatGridController : MonoBehaviour
 
     private void Update()
     {
-        if (isMoving)
-        {
-            MoveTowardsTarget();
-            return;
-        }
-
+        if (isMoving) { MoveTowardsTarget(); return; }
         if (isJumping) return;
         if (isLocked || isGameLocked) return;
 
@@ -195,13 +184,13 @@ public class CatGridController : MonoBehaviour
             isMoving = true;
             if (animator != null) animator.SetBool("IsMoving", true);
             RotateTowards(direction);
+            stepTimer = 0f;
         }
     }
 
     private void RotateTowards(Vector3 direction)
     {
         if (visualRoot == null || direction == Vector3.zero) return;
-
         visualRoot.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }
 
@@ -211,6 +200,7 @@ public class CatGridController : MonoBehaviour
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
+            if (audioManager != null) audioManager.PlayJumpSound();
             if (animator != null) animator.SetTrigger("Jump");
             StartCoroutine(JumpAndSelect());
         }
@@ -220,18 +210,28 @@ public class CatGridController : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
+        // 🔥 SONIDO DE PASOS MIENTRAS SE MUEVE
+        if (transform.position != targetPosition)
+        {
+            stepTimer += Time.deltaTime;
+            if (stepTimer >= STEP_INTERVAL)
+            {
+                stepTimer = 0f;
+                if (audioManager != null) audioManager.PlayStepsSound();
+                Debug.Log("🎵 Sonido de pasos reproducido"); // Para verificar que se ejecuta
+            }
+        }
+
         if (transform.position == targetPosition)
         {
             isMoving = false;
+            stepTimer = 0f;
             if (animator != null) animator.SetBool("IsMoving", false);
             CheckForTrap();
         }
     }
 
-    private void CheckForTrap()
-    {
-        TryTriggerTrap();
-    }
+    private void CheckForTrap() { TryTriggerTrap(); }
 
     private bool TryTriggerTrap()
     {
@@ -240,6 +240,7 @@ public class CatGridController : MonoBehaviour
         if (nearestTrap == null) return false;
 
         nearestTrap.NotifyDetected();
+        if (audioManager != null) audioManager.PlayWinSound();
         if (animator != null) animator.SetTrigger("Trap");
         TrapTriggered?.Invoke(nearestTrap.LockDuration);
         StartCoroutine(LockMovement(nearestTrap.LockDuration));

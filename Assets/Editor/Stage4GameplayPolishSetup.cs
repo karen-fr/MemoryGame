@@ -25,6 +25,14 @@ public static class Stage4GameplayPolishSetup
     private static readonly Vector2 MatchesBackgroundSize = new Vector2(280f, 140f);
     private static readonly Vector2 StartButtonSize = new Vector2(430f, 160f);
 
+    // RestartButton lives as a direct child of GameplayCanvas so its visibility never depends
+    // on EndPanel/StartPanel/OptionsPanel being active.
+    private static readonly Vector2 RestartButtonAnchorMin = new Vector2(0.5f, 0f);
+    private static readonly Vector2 RestartButtonAnchorMax = new Vector2(0.5f, 0f);
+    private static readonly Vector2 RestartButtonPivot = new Vector2(0.5f, 0.5f);
+    private static readonly Vector2 RestartButtonAnchoredPosition = new Vector2(0f, 70f);
+    private static readonly Vector2 RestartButtonSize = new Vector2(220f, 70f);
+
     private static readonly List<string> Created = new List<string>();
     private static readonly List<string> Wired = new List<string>();
     private static readonly List<string> Warnings = new List<string>();
@@ -79,7 +87,7 @@ public static class Stage4GameplayPolishSetup
         GameObject startButtonGO = BuildStartPanel(startPanel);
 
         RectTransform endPanel = FindOrCreateStretchPanel(canvasTransform, "EndPanel");
-        TMP_Text resultText = BuildEndPanel(endPanel, restartButton);
+        TMP_Text resultText = BuildEndPanel(endPanel);
 
         RectTransform optionsPanel = FindOrCreateStretchPanel(canvasTransform, "OptionsPanel");
         GameObject optionsOpenButton = FindOrInstantiate(hudPanel, "OptionsButton", "button_configuracion.prefab");
@@ -87,6 +95,12 @@ public static class Stage4GameplayPolishSetup
 
         // Wire the panel controllers.
         GameManager gameManager = gameControllerGO.GetComponent<GameManager>();
+        UIManager uiManager = uiControllerGO.GetComponent<UIManager>();
+
+        // RestartButton must not depend on any panel's active state to be visible: pull it out
+        // of whatever panel it is currently nested in (EndPanel from a previous setup pass, or
+        // anywhere else) and make it a direct child of GameplayCanvas.
+        ConfigureRestartButton(canvasTransform, restartButton, uiManager);
 
         WireComponent<StartPanelController>(startPanel.gameObject, controller =>
         {
@@ -165,6 +179,7 @@ public static class Stage4GameplayPolishSetup
             $"TimeBackground: size={(timeBgRect != null ? timeBgRect.sizeDelta.ToString() : "N/A")} anchor=top-left\n" +
             $"MatchesBackground: size={(matchesBgRect != null ? matchesBgRect.sizeDelta.ToString() : "N/A")} anchor=top-right\n" +
             $"StartButton: size={(startButtonRect != null ? startButtonRect.sizeDelta.ToString() : "N/A")} anchor=centro\n" +
+            $"RestartButton: parent={restartButton.parent.name} activeSelf={restartButton.gameObject.activeSelf} anchoredPos={(restartButton as RectTransform)?.anchoredPosition}\n" +
             (Warnings.Count > 0 ? $"Advertencias:\n  {string.Join("\n  ", Warnings)}" : "Sin advertencias."));
     }
 
@@ -321,7 +336,54 @@ public static class Stage4GameplayPolishSetup
         return startButtonGO;
     }
 
-    private static TMP_Text BuildEndPanel(RectTransform endPanel, Transform restartButton)
+    private static void ConfigureRestartButton(Transform canvasTransform, Transform restartButton, UIManager uiManager)
+    {
+        if (restartButton.parent != canvasTransform)
+        {
+            restartButton.SetParent(canvasTransform, true);
+            Wired.Add("RestartButton reparentado: hijo directo de GameplayCanvas (ya no depende de EndPanel/StartPanel/OptionsPanel)");
+        }
+
+        RectTransform rect = restartButton as RectTransform;
+        if (rect != null)
+        {
+            rect.anchorMin = RestartButtonAnchorMin;
+            rect.anchorMax = RestartButtonAnchorMax;
+            rect.pivot = RestartButtonPivot;
+            rect.anchoredPosition = RestartButtonAnchoredPosition;
+            rect.sizeDelta = RestartButtonSize;
+            rect.localScale = Vector3.one;
+        }
+
+        restartButton.SetAsLastSibling();
+
+        Button button = restartButton.GetComponent<Button>();
+        if (button != null) button.interactable = true;
+
+        Image image = restartButton.GetComponent<Image>();
+        if (image != null) image.raycastTarget = true;
+
+        CanvasGroup canvasGroup = restartButton.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+
+        if (uiManager != null)
+        {
+            var so = new SerializedObject(uiManager);
+            SetRef(so, "restartButton", button);
+            so.ApplyModifiedProperties();
+        }
+        else
+        {
+            Warnings.Add("UIManager no encontrado; no se pudo confirmar la referencia restartButton.");
+        }
+    }
+
+    private static TMP_Text BuildEndPanel(RectTransform endPanel)
     {
         Image dim = endPanel.GetComponent<Image>();
         if (dim == null && endPanel.childCount == 0)
@@ -368,19 +430,6 @@ public static class Stage4GameplayPolishSetup
         {
             resultText = resultTextTransform.GetComponent<TMP_Text>();
         }
-
-        if (restartButton.parent != endPanel)
-        {
-            restartButton.SetParent(endPanel, false);
-            RectTransform restartRect = restartButton as RectTransform;
-            if (restartRect != null)
-            {
-                restartRect.anchorMin = restartRect.anchorMax = new Vector2(0.5f, 0.5f);
-                restartRect.anchoredPosition = new Vector2(0f, -40f);
-            }
-        }
-
-        restartButton.SetAsLastSibling();
 
         return resultText;
     }
